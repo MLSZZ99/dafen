@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mengarahkan ke WhatsApp...</title>
+  <style>
+    body { font-family: sans-serif; background-color: #f4f4f4; text-align: center; padding-top: 20%; color: #333; }
+  </style>
+</head>
+<body>
+  <h2>🔄 Sedang menghubungkan ke tim dukungan WhatsApp...</h2>
+  <p>Mohon tunggu sebentar...</p>
+
+  <script>
+    const waNumbers = [
+      "https://wa.me/855111111101",
+      "https://wa.me/855111111102",
+      "https://wa.me/855111111103",
+      "https://wa.me/855111111104",
+      "https://wa.me/855111111105"
+    ];
+
+    let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
+    const nextIndex = (lastIndex + 1) % waNumbers.length;
+    localStorage.setItem("waIndex", nextIndex);
+
+    setTimeout(() => {
+      window.location.href = waNumbers[nextIndex];
+    }, 2000);
+  </script>
+</body>
+</html>

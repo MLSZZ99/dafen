@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mengarahkan ke WhatsApp...</title>
+  <title>Menghubungkan ke WhatsApp...</title>
   <script defer src="https://vercel.com/analytics/script.js"></script>
   <style>
-    body { font-family: sans-serif; background-color: #f4f4f4; text-align: center; padding-top: 20%; color: #333; }
+    body {
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+      padding-top: 20%;
+      color: #333;
+    }
     #jump-btn {
       display: none;
       padding: 12px 20px;
@@ -20,9 +26,9 @@
   </style>
 </head>
 <body>
-  <h2>🔄 正在连接客服 WhatsApp...</h2>
-  <p>请稍等 <span id="countdown">3</span> 秒后点击跳转</p>
-  <button id="jump-btn">点击跳转 WhatsApp</button>
+  <h2>🔄 Sedang menghubungkan ke tim dukungan WhatsApp...</h2>
+  <p>Silakan tunggu <span id="countdown">3</span> detik, lalu klik tombol di bawah untuk melanjutkan.</p>
+  <button id="jump-btn">Klik untuk Masuk WhatsApp</button>
 
   <script>
     const waNumbers = [
@@ -33,13 +39,11 @@
       "https://wa.me/855962437202"
     ];
 
-    // 分流逻辑
     let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
     const nextIndex = (lastIndex + 1) % waNumbers.length;
     localStorage.setItem("waIndex", nextIndex);
     const targetURL = waNumbers[nextIndex];
 
-    // 倒计时逻辑
     let seconds = 3;
     const countdownEl = document.getElementById("countdown");
     const btn = document.getElementById("jump-btn");
@@ -53,7 +57,6 @@
       }
     }, 1000);
 
-    // 点击跳转
     btn.onclick = () => {
       window.location.href = targetURL;
     };

@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menghubungkan ke WhatsApp...</title>
-
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f4f4f4;
+      background-color: #f9f9f9;
       text-align: center;
       padding-top: 25%;
       color: #333;
@@ -21,8 +20,8 @@
   </style>
 </head>
 <body>
-  <h2>🔄 Sedang menghubungkan ke tim dukungan resmi...</h2>
-  <div class="spinner">Harap tunggu, Anda akan diarahkan secara otomatis...</div>
+  <h2>🔄 Sedang menghubungkan ke WhatsApp...</h2>
+  <div class="spinner">Harap tunggu, Anda akan diarahkan...</div>
 
   <script>
     const waNumbers = [
@@ -33,15 +32,14 @@
       "https://wa.me/855962437202"
     ];
 
+    const webhookURL = "https://script.google.com/macros/s/AKfycbyzxqIXiZexuwzE_N9vxVjFnMOXr2ZuuNR_0yv42R8l_TlREdEcSFJIjC_av4GQRvt7bg/exec";
+
     let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
     const nextIndex = (lastIndex + 1) % waNumbers.length;
     localStorage.setItem("waIndex", nextIndex);
     const targetURL = waNumbers[nextIndex];
 
-    // ✅ 你刚刚生成的 webhook
-    const webhookURL = "https://script.google.com/macros/s/AKfycbyzxqIXiZexuwzE_N9vxVjFnMOXr2ZuuNR_0yv42R8l_TlREdEcSFJIjC_av4GQRvt7bg/exec";
-
-    // Kirim data & redirect
+    // Kirim data ke Google Sheets
     async function kirimDanRedirect() {
       try {
         await fetch(webhookURL, {
@@ -52,7 +50,7 @@
           }
         });
       } catch (e) {
-        console.error("Gagal kirim ke Google Sheets:", e);
+        console.error("Gagal mengirim ke Google Sheets:", e);
       }
 
       setTimeout(() => {
@@ -64,4 +62,5 @@
   </script>
 </body>
 </html>
+
 

@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Menghubungkan ke WhatsApp...</title>
+
+  <!-- ✅ Google Analytics GA4 Tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FE0Q2DS7LR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-FE0Q2DS7LR');
+  </script>
+
   <style>
     body {
       font-family: sans-serif;
@@ -21,7 +31,7 @@
 </head>
 <body>
   <h2>🔄 Sedang menghubungkan ke tim dukungan resmi...</h2>
-  <div class="spinner">Harap tunggu, Anda akan diarahkan secara otomatis...</div>
+  <div class="spinner">Harap tunggu, Anda akan diarahkan ke WhatsApp...</div>
 
   <script>
     const waNumbers = [
@@ -32,36 +42,23 @@
       "https://wa.me/855962437202"
     ];
 
-    // ✅ 替换成你部署好的 webhook 链接
-    const webhookURL = "https://script.google.com/macros/s/AKfycbxXHr4CRQUt9ztL4zKJ1TkAoGpQumt52QT8zR6o7M2A5rvyUwCmF7AHiUxu4uavh4iH/exec";
-
     let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
     const nextIndex = (lastIndex + 1) % waNumbers.length;
     localStorage.setItem("waIndex", nextIndex);
+
     const targetURL = waNumbers[nextIndex];
 
-    async function kirimDanRedirect() {
-      try {
-        await fetch(webhookURL, {
-          method: "POST",
-          body: JSON.stringify({ link: targetURL }),
-          headers: { "Content-Type": "application/json" }
-        });
-        console.log("✅ Data terkirim ke Google Sheets");
-      } catch (e) {
-        console.error("❌ Gagal mengirim ke Google Sheets:", e);
-      }
+    // ✅ 发送 GA4 点击事件
+    gtag('event', 'klik_whatsapp', {
+      event_category: 'whatsapp_redirect',
+      event_label: targetURL,
+      value: 1
+    });
 
-      // 自动跳转到 WhatsApp
-      setTimeout(() => {
-        window.location.href = targetURL;
-      }, 3000);
-    }
-
-    kirimDanRedirect();
+    // ⏱️ 延迟 2.5 秒后跳转
+    setTimeout(() => {
+      window.location.href = targetURL;
+    }, 2500);
   </script>
 </body>
 </html>
-
-
-

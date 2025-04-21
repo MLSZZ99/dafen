@@ -22,10 +22,19 @@
       "https://wa.me/855962437202"
     ];
 
+   // 每次访问计数 +1
+    const clickKey = "pageVisitCount";
+    let count = parseInt(localStorage.getItem(clickKey)) || 0;
+    count += 1;
+    localStorage.setItem(clickKey, count);
+    console.log(`当前网页点击总次数：${count} 次`);
+
+    // 輪詢跳轉邏輯
     let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
     const nextIndex = (lastIndex + 1) % waNumbers.length;
     localStorage.setItem("waIndex", nextIndex);
 
+    // 跳转执行
     setTimeout(() => {
       window.location.href = waNumbers[nextIndex];
     }, 2000);

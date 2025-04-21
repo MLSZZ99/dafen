@@ -39,19 +39,16 @@
       "https://wa.me/855962437202"
     ];
 
-    const webhookURL = "https://script.google.com/macros/s/AKfycbzITlsMI8y3xBKBIHSAUpacgPZaQVCmf2eY0gr9BQQ3efvv8AxSCvUh92Q-WcgTPQ2b/exec"; // Ganti dengan webhook Google Sheets Anda
+    const webhookURL = "https://script.google.com/macros/s/AKfycbzITlsMI8y3xBKBIHSAUpacgPZaQVCmf2eY0gr9BQQ3efvv8AxSCvUh92Q-WcgTPQ2b/exec";
 
-    // Rotasi WhatsApp link
     let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
     const nextIndex = (lastIndex + 1) % waNumbers.length;
     localStorage.setItem("waIndex", nextIndex);
     const targetURL = waNumbers[nextIndex];
 
-    // Hitung klik (localStorage)
     const clickKey = "wsClickCount";
     let clickCount = parseInt(localStorage.getItem(clickKey)) || 0;
 
-    // Countdown sebelum tombol muncul
     let seconds = 3;
     const countdownEl = document.getElementById("countdown");
     const btn = document.getElementById("jump-btn");
@@ -65,25 +62,26 @@
       }
     }, 1000);
 
-    // Aksi tombol
     btn.onclick = async () => {
       clickCount += 1;
       localStorage.setItem(clickKey, clickCount);
       console.log(`\uD83D\uDCC8 Total klik WhatsApp saat ini: ${clickCount}`);
 
-      // Kirim ke Google Sheets
-      await fetch(webhookURL, {
-        method: "POST",
-        body: JSON.stringify({
-          link: targetURL,
-          ip: "auto"
-        }),
-        headers: {
-          "Content-Type": "application/json"
-        }
-      });
+      try {
+        await fetch(webhookURL, {
+          method: "POST",
+          body: JSON.stringify({
+            link: targetURL,
+            ip: "auto"
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+      } catch (err) {
+        console.error("Gagal mengirim data ke Google Sheets", err);
+      }
 
-      // Redirect ke WhatsApp
       window.location.href = targetURL;
     };
   </script>

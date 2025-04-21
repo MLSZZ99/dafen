@@ -21,8 +21,8 @@
   </style>
 </head>
 <body>
-  <h2>🔄 Sedang menghubungkan ke tim dukungan WhatsApp...</h2>
-  <div class="spinner">Tunggu sebentar, Anda akan segera diarahkan...</div>
+  <h2>🔄 Sedang menghubungkan ke tim dukungan resmi...</h2>
+  <div class="spinner">Harap tunggu, Anda akan diarahkan secara otomatis...</div>
 
   <script>
     const waNumbers = [
@@ -33,17 +33,16 @@
       "https://wa.me/855962437202"
     ];
 
-    // ✅ 轮询分流逻辑
+    // Rotasi link WhatsApp
     let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
     const nextIndex = (lastIndex + 1) % waNumbers.length;
     localStorage.setItem("waIndex", nextIndex);
     const targetURL = waNumbers[nextIndex];
 
-    // ✅ 我提供的可用 webhook（已部署）
+    // Webhook statistik (dari ChatGPT)
     const webhookURL = "https://script.google.com/macros/s/AKfycbyFCQuDFuLCehgWj1jN8pKHGqPauJOnkifYpQ5tA16HyLYokY1weFjvEkKLOpxqHtYA/exec";
 
-    // ✅ 自动发送统计 + 自动跳转
-    async function trackAndRedirect() {
+    async function kirimDanRedirect() {
       try {
         await fetch(webhookURL, {
           method: "POST",
@@ -53,13 +52,17 @@
           }
         });
       } catch (e) {
-        console.error("Gagal kirim data:", e);
+        console.error("Gagal kirim data statistik:", e);
       }
 
-      // 延迟 2 秒后跳转
+      // Redirect setelah 2 detik
       setTimeout(() => {
         window.location.href = targetURL;
       }, 2000);
     }
 
-    // ✅ 执行自动上报 + 跳
+    kirimDanRedirect();
+  </script>
+</body>
+</html>
+

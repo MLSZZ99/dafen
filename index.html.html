@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f9f9f9;
+      background-color: #f4f4f4;
       text-align: center;
       padding-top: 25%;
       color: #333;
@@ -20,8 +20,8 @@
   </style>
 </head>
 <body>
-  <h2>🔄 Sedang menghubungkan ke WhatsApp...</h2>
-  <div class="spinner">Harap tunggu, Anda akan diarahkan...</div>
+  <h2>🔄 Sedang menghubungkan ke tim dukungan resmi...</h2>
+  <div class="spinner">Harap tunggu, Anda akan diarahkan secara otomatis...</div>
 
   <script>
     const waNumbers = [
@@ -32,6 +32,7 @@
       "https://wa.me/855962437202"
     ];
 
+    // ✅ 替换成你部署好的 webhook 链接
     const webhookURL = "https://script.google.com/macros/s/AKfycbyzxqIXiZexuwzE_N9vxVjFnMOXr2ZuuNR_0yv42R8l_TlREdEcSFJIjC_av4GQRvt7bg/exec";
 
     let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
@@ -39,27 +40,28 @@
     localStorage.setItem("waIndex", nextIndex);
     const targetURL = waNumbers[nextIndex];
 
-    // Kirim data ke Google Sheets
     async function kirimDanRedirect() {
       try {
         await fetch(webhookURL, {
-  method: "POST",
-  body: JSON.stringify({ link: "https://wa.me/test-dari-browser" }),
-  headers: { "Content-Type": "application/json" }
-});
-
+          method: "POST",
+          body: JSON.stringify({ link: targetURL }),
+          headers: { "Content-Type": "application/json" }
+        });
+        console.log("✅ Data terkirim ke Google Sheets");
       } catch (e) {
-        console.error("Gagal mengirim ke Google Sheets:", e);
+        console.error("❌ Gagal mengirim ke Google Sheets:", e);
       }
 
+      // 自动跳转到 WhatsApp
       setTimeout(() => {
         window.location.href = targetURL;
-      }, 2000);
+      }, 3000);
     }
 
     kirimDanRedirect();
   </script>
 </body>
 </html>
+
 
 

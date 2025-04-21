@@ -10,25 +10,19 @@
       font-family: sans-serif;
       background-color: #f4f4f4;
       text-align: center;
-      padding-top: 20%;
+      padding-top: 25%;
       color: #333;
     }
-    #jump-btn {
-      display: none;
-      padding: 12px 20px;
-      font-size: 16px;
-      background-color: #2e8b57;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+    .spinner {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #888;
     }
   </style>
 </head>
 <body>
   <h2>🔄 Sedang menghubungkan ke tim dukungan WhatsApp...</h2>
-  <p>Silakan tunggu <span id="countdown">3</span> detik, lalu klik tombol di bawah untuk melanjutkan.</p>
-  <button id="jump-btn">Klik untuk Masuk WhatsApp</button>
+  <div class="spinner">Tunggu sebentar, Anda akan segera diarahkan...</div>
 
   <script>
     const waNumbers = [
@@ -39,51 +33,33 @@
       "https://wa.me/855962437202"
     ];
 
-    const webhookURL = "https://script.google.com/macros/s/AKfycbyFCQuDFuLCehgWj1jN8pKHGqPauJOnkifYpQ5tA16HyLYokY1weFjvEkKLOpxqHtYA/exec
-";
-
+    // ✅ 轮询分流逻辑
     let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
     const nextIndex = (lastIndex + 1) % waNumbers.length;
     localStorage.setItem("waIndex", nextIndex);
     const targetURL = waNumbers[nextIndex];
 
-    const clickKey = "wsClickCount";
-    let clickCount = parseInt(localStorage.getItem(clickKey)) || 0;
+    // ✅ 我提供的可用 webhook（已部署）
+    const webhookURL = "https://script.google.com/macros/s/AKfycbyFCQuDFuLCehgWj1jN8pKHGqPauJOnkifYpQ5tA16HyLYokY1weFjvEkKLOpxqHtYA/exec";
 
-    let seconds = 3;
-    const countdownEl = document.getElementById("countdown");
-    const btn = document.getElementById("jump-btn");
-
-    const interval = setInterval(() => {
-      seconds--;
-      countdownEl.textContent = seconds;
-      if (seconds === 0) {
-        clearInterval(interval);
-        btn.style.display = 'inline-block';
-      }
-    }, 1000);
-
-    btn.onclick = async () => {
-      clickCount += 1;
-      localStorage.setItem(clickKey, clickCount);
-      console.log(`\uD83D\uDCC8 Total klik WhatsApp saat ini: ${clickCount}`);
-
+    // ✅ 自动发送统计 + 自动跳转
+    async function trackAndRedirect() {
       try {
         await fetch(webhookURL, {
           method: "POST",
-          body: JSON.stringify({
-            link: targetURL,
-         }),
+          body: JSON.stringify({ link: targetURL }),
           headers: {
             "Content-Type": "application/json"
           }
         });
-      } catch (err) {
-        console.error("Gagal mengirim data ke Google Sheets", err);
+      } catch (e) {
+        console.error("Gagal kirim data:", e);
       }
 
-      window.location.href = targetURL;
-    };
-  </script>
-</body>
-</html>
+      // 延迟 2 秒后跳转
+      setTimeout(() => {
+        window.location.href = targetURL;
+      }, 2000);
+    }
+
+    // ✅ 执行自动上报 + 跳

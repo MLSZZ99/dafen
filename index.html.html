@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Menghubungkan ke WhatsApp...</title>
 
-  <!-- ✅ 加入 Vercel Analytics 脚本 -->
-  <script defer src="https://vercel.com/analytics/script.js"></script>
-
   <style>
     body {
       font-family: sans-serif;
@@ -41,12 +38,21 @@
     localStorage.setItem("waIndex", nextIndex);
     const targetURL = waNumbers[nextIndex];
 
-    // 自动上报点击行为（你可以另外加 webhook）
+    // ✅ 你刚刚生成的 webhook
+    const webhookURL = "https://script.google.com/macros/s/AKfycbyzxqIXiZexuwzE_N9vxVjFnMOXr2ZuuNR_0yv42R8l_TlREdEcSFJIjC_av4GQRvt7bg/exec";
+
+    // Kirim data & redirect
     async function kirimDanRedirect() {
       try {
-        // 你自己的 webhook 可在这里加入
+        await fetch(webhookURL, {
+          method: "POST",
+          body: JSON.stringify({ link: targetURL }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
       } catch (e) {
-        console.error("Gagal kirim data:", e);
+        console.error("Gagal kirim ke Google Sheets:", e);
       }
 
       setTimeout(() => {
@@ -58,3 +64,4 @@
   </script>
 </body>
 </html>
+

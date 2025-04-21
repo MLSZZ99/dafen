@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Menghubungkan ke WhatsApp...</title>
+
+  <!-- ✅ 加入 Vercel Analytics 脚本 -->
   <script defer src="https://vercel.com/analytics/script.js"></script>
+
   <style>
     body {
       font-family: sans-serif;
@@ -33,29 +36,19 @@
       "https://wa.me/855962437202"
     ];
 
-    // Rotasi link WhatsApp
     let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
     const nextIndex = (lastIndex + 1) % waNumbers.length;
     localStorage.setItem("waIndex", nextIndex);
     const targetURL = waNumbers[nextIndex];
 
-    // Webhook statistik (dari ChatGPT)
-    const webhookURL = "https://script.google.com/macros/s/AKfycbyFCQuDFuLCehgWj1jN8pKHGqPauJOnkifYpQ5tA16HyLYokY1weFjvEkKLOpxqHtYA/exec";
-
+    // 自动上报点击行为（你可以另外加 webhook）
     async function kirimDanRedirect() {
       try {
-        await fetch(webhookURL, {
-          method: "POST",
-          body: JSON.stringify({ link: targetURL }),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
+        // 你自己的 webhook 可在这里加入
       } catch (e) {
-        console.error("Gagal kirim data statistik:", e);
+        console.error("Gagal kirim data:", e);
       }
 
-      // Redirect setelah 2 detik
       setTimeout(() => {
         window.location.href = targetURL;
       }, 2000);
@@ -65,4 +58,3 @@
   </script>
 </body>
 </html>
-

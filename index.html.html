@@ -1,64 +1,31 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Menghubungkan ke WhatsApp...</title>
-
-  <!-- ✅ Google Analytics GA4 Tag -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FE0Q2DS7LR"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-FE0Q2DS7LR');
-  </script>
-
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #f4f4f4;
-      text-align: center;
-      padding-top: 25%;
-      color: #333;
-    }
-    .spinner {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #888;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peluang Penghasilan Online - Bergabung Bersama PK95</title>
 </head>
-<body>
-  <h2>🔄 Sedang menghubungkan ke tim dukungan resmi...</h2>
-  <div class="spinner">Harap tunggu, Anda akan diarahkan ke WhatsApp...</div>
+<body style="margin:0; padding:0; font-family:sans-serif; background:#f2f2f2;">
 
-  <script>
-    const waNumbers = [
-      "https://wa.me/6287822482955",
-      "https://wa.me/6287822482955",
-      "https://wa.me/6287822482955",
-      "https://wa.me/6287822482955",
-      "https://wa.me/855962437202"
-    ];
+  <div style="background:white; max-width:600px; margin:30px auto; padding:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1); text-align:center;">
 
-    let lastIndex = parseInt(localStorage.getItem("waIndex")) || 0;
-    const nextIndex = (lastIndex + 1) % waNumbers.length;
-    localStorage.setItem("waIndex", nextIndex);
+    <h1 style="color:#ff9900;">Kesempatan Resmi dari PK95</h1>
+    <p style="font-size:18px; color:#333;">Perusahaan terpercaya dengan pengalaman lebih dari 10 tahun di industri online.</p>
 
-    const targetURL = waNumbers[nextIndex];
+    <h2 style="color:#0066cc; margin-top:20px;">Dapatkan Penghasilan Harian Hingga Rp 1.500.000!</h2>
+    <p style="font-size:16px; color:#555;">Tanpa modal besar, kerja fleksibel, hasil nyata setiap hari!</p>
 
-    // ✅ 发送 GA4 点击事件
-    gtag('event', 'klik_whatsapp', {
-      event_category: 'whatsapp_redirect',
-      event_label: targetURL,
-      value: 1
-    });
+    <div style="margin:30px 0;">
+      <p style="font-size:18px; color:#000;">Hubungi admin untuk bergabung:</p>
+      <p style="font-size:20px; font-weight:bold; color:#0066cc;">WhatsApp 1: +62 8xxx-xxxxxxx</p>
+      <p style="font-size:20px; font-weight:bold; color:#0066cc;">WhatsApp 2: +62 8xxx-xxxxxxx</p>
+      <p style="font-size:20px; font-weight:bold; color:#0066cc;">WhatsApp 3: +62 8xxx-xxxxxxx</p>
+    </div>
 
-    // ⏱️ 延迟 2.5 秒后跳转
-    setTimeout(() => {
-      window.location.href = targetURL;
-    }, 2500);
-  </script>
+    <a href="#" style="display:inline-block; padding:15px 30px; background:#ff9900; color:white; text-decoration:none; border-radius:5px; font-size:18px;">Gabung Sekarang!</a>
+
+  </div>
+
 </body>
 </html>
+

